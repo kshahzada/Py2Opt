@@ -7,13 +7,24 @@ from py2opt.solver import Solver
 
 
 class RouteFinder:
-    def __init__(self, distance_matrix, cities_names, iterations=5, fixed_start=True, fixed_end=False, writer_flag=False, method='py2opt'):
+    def __init__(
+            self,
+            distance_matrix,
+            cities_names,
+            iterations=5,
+            fixed_start=True,
+            fixed_end=False,
+            writer_flag=False,
+            improvement_threshold=0.01,
+            method='py2opt'
+    ):
         self.distance_matrix = distance_matrix
         self.iterations = iterations
         self.writer_flag = writer_flag
         self.cities_names = cities_names
         self.fixed_start = fixed_start
         self.fixed_end = fixed_end
+        self.improvement_threshold = improvement_threshold
 
     def solve(self):
         start_time = time.time()
@@ -24,7 +35,7 @@ class RouteFinder:
         for iteration in tqdm(range(self.iterations)):
             num_cities = len(self.distance_matrix)
             initial_route = self.initialize_route()
-            tsp = Solver(self.distance_matrix, initial_route)
+            tsp = Solver(self.distance_matrix, initial_route, self.improvement_threshold)
             new_route, new_distance, distances = tsp.two_opt()
 
             if iteration == 0:
@@ -65,7 +76,7 @@ class RouteFinder:
 
     @ staticmethod
     def writer(best_route, best_distance, cities_names):
-        f=open("../results.txt", "w+")
+        f = open("../results.txt", "w+")
         for i in best_route:
             f.write(cities_names[i])
             f.write("\n")
