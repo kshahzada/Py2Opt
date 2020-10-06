@@ -58,7 +58,7 @@ class RouteFinder:
             end -= 1
 
         route = np.arange(length)
-        route = np.concatenate(([
+        route = np.concatenate([
             route[:shuffle_start],
             np.random.shuffle(route[shuffle_start:shuffle_end]),
             route[shuffle_end:],
