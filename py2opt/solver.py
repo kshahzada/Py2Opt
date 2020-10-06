@@ -18,10 +18,12 @@ class Solver:
 
     def exhaustive_search(self):
         self.best_route = [0] + list(range(1, self.num_cities))
-        self.best_distance = self.calculate_path_dist(self.distance_matrix, self.best_route)
+        self.best_distance = self.calculate_path_dist(
+            self.distance_matrix, self.best_route)
 
         for new_route in itertools.permutations(list(range(1, self.num_cities))):
-            new_distance = self.calculate_path_dist(self.distance_matrix, [0] + list(new_route[:]))
+            new_distance = self.calculate_path_dist(
+                self.distance_matrix, [0] + list(new_route[:]))
 
             if new_distance < self.best_distance:
                 self.update([0] + list(new_route[:]), new_distance)
@@ -29,17 +31,33 @@ class Solver:
 
         return self.best_route, self.best_distance, self.distances
 
-    def two_opt(self, improvement_threshold=0.01):
+    def two_opt(
+            self,
+            improvement_threshold=0.01,
+            fixed_start=True,
+            fixed_end=False
+    ):
         self.best_route = self.initial_route
-        self.best_distance = self.calculate_path_dist(self.distance_matrix, self.best_route)
+        self.best_distance = self.calculate_path_dist(
+            self.distance_matrix, self.best_route
+        )
         improvement_factor = 1
-        
+
+        shuffle_start = 0
+        shuffle_end = self.num_cities
+        if fixed_start:
+            shuffle_start += 1
+        if fixed_end:
+            shuffle_end -= 1
+
         while improvement_factor > improvement_threshold:
             previous_best = self.best_distance
-            for swap_first in range(1, self.num_cities - 2):
-                for swap_last in range(swap_first + 1, self.num_cities - 1):
-                    new_route = self.swap(self.best_route, swap_first, swap_last)
-                    new_distance = self.calculate_path_dist(self.distance_matrix, new_route)
+            for swap_first in range(shuffle_start, shuffle_end - 1):
+                for swap_last in range(swap_first + 1, shuffle_end):
+                    new_route = self.swap(
+                        self.best_route, swap_first, swap_last)
+                    new_distance = self.calculate_path_dist(
+                        self.distance_matrix, new_route)
                     self.distances.append(self.best_distance)
                     if 0 < self.best_distance - new_distance:
                         self.update(new_route, new_distance)
@@ -60,6 +78,7 @@ class Solver:
     @staticmethod
     def swap(path, swap_first, swap_last):
         path_updated = np.concatenate((path[0:swap_first],
-                                       path[swap_last:-len(path) + swap_first - 1:-1],
+                                       path[swap_last:-
+                                            len(path) + swap_first - 1:-1],
                                        path[swap_last + 1:len(path)]))
         return path_updated.tolist()
