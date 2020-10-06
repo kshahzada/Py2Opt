@@ -56,7 +56,7 @@ class Solver:
             previous_best = self.best_distance
             for swap_first in range(shuffle_start, shuffle_end - 1):
                 for swap_last in range(swap_first + 1, shuffle_end):
-                    print("{}{}".format(swap_first, swap_last))
+                    print("{},{}".format(swap_first, swap_last))
 
                     new_route = self.swap(
                         self.best_route, swap_first, swap_last)
@@ -76,6 +76,8 @@ class Solver:
         """
         path_distance = 0
         for ind in range(len(path) - 1):
+            print("{},{},{}".format(ind,path[ind], path[ind + 1]))
+
             path_distance += distance_matrix[path[ind]][path[ind + 1]]
         return float("{0:.2f}".format(path_distance))
 
