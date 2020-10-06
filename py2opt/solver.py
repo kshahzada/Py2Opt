@@ -56,6 +56,8 @@ class Solver:
             previous_best = self.best_distance
             for swap_first in range(shuffle_start, shuffle_end - 1):
                 for swap_last in range(swap_first + 1, shuffle_end):
+                    print("{}{}".format(swap_first, swap_last))
+
                     new_route = self.swap(
                         self.best_route, swap_first, swap_last)
                     new_distance = self.calculate_path_dist(

@@ -15,7 +15,6 @@ class RouteFinder:
             fixed_start=True,
             fixed_end=False,
             writer_flag=False,
-            improvement_threshold=0.01,
             method='py2opt'
     ):
         self.distance_matrix = distance_matrix
@@ -24,9 +23,8 @@ class RouteFinder:
         self.cities_names = cities_names
         self.fixed_start = fixed_start
         self.fixed_end = fixed_end
-        self.improvement_threshold = improvement_threshold
 
-    def solve(self):
+    def solve(self, improvement_threshold=0.01):
         print("Top")
 
         start_time = time.time()
@@ -38,7 +36,7 @@ class RouteFinder:
             num_cities = len(self.distance_matrix)
             initial_route = self.initialize_route()
             tsp = Solver(self.distance_matrix, initial_route)
-            new_route, new_distance, distances = tsp.two_opt(improvement_threshold=self.improvement_threshold)
+            new_route, new_distance, distances = tsp.two_opt(improvement_threshold=improvement_threshold)
 
             if iteration == 0:
                 best_distance = new_distance
