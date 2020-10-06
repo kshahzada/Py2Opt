@@ -78,7 +78,7 @@ class Solver:
         for ind in range(len(path) - 1):
             print("{},{},{}".format(ind,path[ind], path[ind + 1]))
 
-            path_distance += distance_matrix[path[ind]][path[ind + 1]]
+            path_distance += distance_matrix[int(path[ind])][int(path[ind + 1])]
         return float("{0:.2f}".format(path_distance))
 
     @staticmethod
