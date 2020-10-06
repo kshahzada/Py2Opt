@@ -38,8 +38,6 @@ class RouteFinder:
                 best_route = new_route
                 best_distances = distances
 
-            elapsed_time = time.time() - start_time
-
         if self.writer_flag:
             self.writer(best_route, best_distance, self.cities_names)
 
