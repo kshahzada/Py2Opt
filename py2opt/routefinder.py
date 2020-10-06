@@ -23,7 +23,7 @@ class RouteFinder:
 
         for iteration in tqdm(range(self.iterations)):
             num_cities = len(self.distance_matrix)
-            initial_route = initialize_route()
+            initial_route = self.initialize_route()
             tsp = Solver(self.distance_matrix, initial_route)
             new_route, new_distance, distances = tsp.two_opt()
 
@@ -53,9 +53,9 @@ class RouteFinder:
         shuffle_end = length
 
         if self.fixed_start:
-            start += 1
+            shuffle_start += 1
         if self.fixed_end:
-            end -= 1
+            shuffle_end -= 1
 
         route = np.arange(length)
         route = np.concatenate([
