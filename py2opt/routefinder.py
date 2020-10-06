@@ -61,13 +61,13 @@ class RouteFinder:
         route = np.concatenate(([
             route[:shuffle_start],
             np.random.shuffle(route[shuffle_start:shuffle_end]),
-            route[shuffle_end:]
+            route[shuffle_end:],
             ])
         return route
 
-    @staticmethod
+    @ staticmethod
     def writer(best_route, best_distance, cities_names):
-        f = open("../results.txt", "w+")
+        f=open("../results.txt", "w+")
         for i in best_route:
             f.write(cities_names[i])
             f.write("\n")
