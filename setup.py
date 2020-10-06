@@ -25,7 +25,7 @@ setup(
     ],
     packages=["py2opt"],
     include_package_data=True,
-    install_requires=['numpy', 'random2'],
+    install_requires=['numpy', 'random2', 'tqdm'],
     entry_points={
         "console_scripts": [
             "pdrm83=Py2Opt.__main__:main",

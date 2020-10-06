@@ -1,28 +1,29 @@
 import random2
 import time
+from tqdm.auto import tqdm
+import numpy as np
 
 from py2opt.solver import Solver
 
 
 class RouteFinder:
-    def __init__(self, distance_matrix, cities_names, iterations=5, writer_flag=False, method='py2opt'):
+    def __init__(self, distance_matrix, cities_names, iterations=5, fixed_start=True, fixed_end=False, writer_flag=False, method='py2opt'):
         self.distance_matrix = distance_matrix
         self.iterations = iterations
         self.writer_flag = writer_flag
         self.cities_names = cities_names
+        self.fixed_start = fixed_start
+        self.fixed_end = fixed_end
 
     def solve(self):
         start_time = time.time()
-        elapsed_time = 0
-        iteration = 0
         best_distance = 0
         best_route = []
         best_distances = []
 
-        while iteration < self.iterations:
+        for iteration in tqdm(range(self.iterations)):
             num_cities = len(self.distance_matrix)
-            print(round(elapsed_time), 'sec')
-            initial_route = [0] + random2.sample(range(1, num_cities), num_cities - 1)
+            initial_route = initialize_route()
             tsp = Solver(self.distance_matrix, initial_route)
             new_route, new_distance, distances = tsp.two_opt()
 
@@ -38,7 +39,6 @@ class RouteFinder:
                 best_distances = distances
 
             elapsed_time = time.time() - start_time
-            iteration += 1
 
         if self.writer_flag:
             self.writer(best_route, best_distance, self.cities_names)
@@ -48,6 +48,24 @@ class RouteFinder:
             return best_distance, best_route
         else:
             return best_distance, best_route
+
+    def initialize_route(self):
+        length = len(self.distance_matrix)
+        shuffle_start = 0
+        shuffle_end = length
+
+        if self.fixed_start:
+            start += 1
+        if self.fixed_end:
+            end -= 1
+
+        route = np.arange(length)
+        route = np.concatenate(([
+            route[:shuffle_start],
+            np.random.shuffle(route[shuffle_start:shuffle_end]),
+            route[shuffle_end:]
+            ])
+        return route
 
     @staticmethod
     def writer(best_route, best_distance, cities_names):
