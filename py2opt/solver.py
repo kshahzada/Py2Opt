@@ -83,8 +83,5 @@ class Solver:
 
     @staticmethod
     def swap(path, swap_first, swap_last):
-        path_updated = np.concatenate((path[0:swap_first],
-                                       path[swap_last:-
-                                            len(path) + swap_first - 1:-1],
-                                       path[swap_last + 1:len(path)]))
-        return path_updated.tolist()
+        path[[swap_first, swap_last]] = path[[swap_last, swap_first]]
+        return path.tolist()
