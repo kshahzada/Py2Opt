@@ -49,6 +49,7 @@ class Solver:
             shuffle_start += 1
         if fixed_end:
             shuffle_end -= 1
+        print("Outer")
 
         while improvement_factor > improvement_threshold:
             print("Looping")
