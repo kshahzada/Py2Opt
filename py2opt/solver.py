@@ -83,5 +83,7 @@ class Solver:
 
     @staticmethod
     def swap(path, swap_first, swap_last):
+        print("s{},{}".format(swap_first, swap_last))
+
         path[[swap_first, swap_last]] = path[[swap_last, swap_first]]
         return path.tolist()
