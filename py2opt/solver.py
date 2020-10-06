@@ -85,6 +85,6 @@ class Solver:
     def swap(path, swap_first, swap_last):
         print("{}".format(path))
         print("s{},{}".format(swap_first, swap_last))
-
-        path[[swap_first, swap_last]] = path[[swap_last, swap_first]]
-        return path
+        new_path = path.copy()
+        new_path[[swap_first, swap_last]] = new_path[[swap_last, swap_first]]
+        return new_path
