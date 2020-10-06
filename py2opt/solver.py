@@ -51,6 +51,7 @@ class Solver:
             shuffle_end -= 1
 
         while improvement_factor > improvement_threshold:
+            print("Looping")
             previous_best = self.best_distance
             for swap_first in range(shuffle_start, shuffle_end - 1):
                 for swap_last in range(swap_first + 1, shuffle_end):
@@ -59,7 +60,7 @@ class Solver:
                     new_distance = self.calculate_path_dist(
                         self.distance_matrix, new_route)
                     self.distances.append(self.best_distance)
-                    if 0 < self.best_distance - new_distance:
+                    if self.best_distance > new_distance:
                         self.update(new_route, new_distance)
 
             improvement_factor = 1 - self.best_distance/previous_best
