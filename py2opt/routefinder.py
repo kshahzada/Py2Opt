@@ -27,6 +27,8 @@ class RouteFinder:
         self.improvement_threshold = improvement_threshold
 
     def solve(self):
+        print("Top")
+
         start_time = time.time()
         best_distance = 0
         best_route = []
