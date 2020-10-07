@@ -54,8 +54,8 @@ class Solver:
         while improvement_factor > improvement_threshold:
             print("Looping")
             previous_best = self.best_distance
-            for swap_first in range(shuffle_start, shuffle_end - 1):
-                for swap_last in range(swap_first + 1, shuffle_end):
+            for swap_first in range(shuffle_start, shuffle_end - 2):
+                for swap_last in range(swap_first + 1, shuffle_end - 1):
                     print("{},{}".format(swap_first, swap_last))
 
                     new_route = self.swap(
