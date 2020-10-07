@@ -12,6 +12,7 @@ class Solver:
         self.distances = []
 
     def update(self, new_route, new_distance):
+        print("Updating : {} {}".format(new_route,new_distance))
         self.best_distance = new_distance
         self.best_route = new_route
         self.distances += [new_distance]
@@ -50,19 +51,17 @@ class Solver:
             shuffle_start += 1
         if fixed_end:
             shuffle_end -= 1
-        print("Outer")
 
         while improvement_factor > improvement_threshold:
-            print("Looping")
             previous_best = self.best_distance
-            for swap_first in range(shuffle_start, shuffle_end - 2):
-                for swap_last in range(swap_first + 1, shuffle_end - 1):
-                    print("{},{}".format(swap_first, swap_last))
-
+            for swap_first in range(shuffle_start, shuffle_end - 1):
+                for swap_last in range(swap_first + 1, shuffle_end):
                     new_route = self.swap(
                         self.best_route, swap_first, swap_last)
+
                     new_distance = self.calculate_path_dist(
                         self.distance_matrix, new_route)
+                        
                     if self.best_distance > new_distance:
                         self.update(new_route, new_distance)
 
@@ -76,15 +75,11 @@ class Solver:
         """
         path_distance = 0
         for ind in range(len(path) - 1):
-            print("{},{},{}".format(ind,path[ind], path[ind + 1]))
-
             path_distance += distance_matrix[int(path[ind])][int(path[ind + 1])]
         return float("{0:.2f}".format(path_distance))
 
     @staticmethod
     def swap(path, swap_first, swap_last):
-        print("{}".format(path))
-        print("s{},{}".format(swap_first, swap_last))
         new_path = path.copy()
         new_path[[swap_first, swap_last]] = new_path[[swap_last, swap_first]]
         return new_path
