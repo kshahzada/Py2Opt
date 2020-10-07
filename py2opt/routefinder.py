@@ -54,9 +54,9 @@ class RouteFinder:
 
         if self.cities_names:
             best_route = [self.cities_names[i] for i in best_route]
-            return best_distance, best_route
+            return best_distance, best_route, best_distances
         else:
-            return best_distance, best_route
+            return best_distance, best_route, best_distances
 
     def initialize_route(self):
         length = len(self.distance_matrix)
