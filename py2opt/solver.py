@@ -68,6 +68,45 @@ class Solver:
             improvement_factor = 1 - self.best_distance/previous_best
         return self.best_route, self.best_distance, self.distances
 
+    def three_opt(
+            self,
+            improvement_threshold=0.01,
+            fixed_start=True,
+            fixed_end=False
+    ):
+        self.best_route = self.initial_route
+        self.best_distance = self.calculate_path_dist(
+            self.distance_matrix, self.best_route
+        )
+        improvement_factor = 1
+
+        shuffle_start = 0
+        shuffle_end = self.num_cities
+        if fixed_start:
+            shuffle_start += 1
+        if fixed_end:
+            shuffle_end -= 1
+
+        while improvement_factor > improvement_threshold:
+            previous_best = self.best_distance
+            for swap_first in range(shuffle_start, shuffle_end - 2):
+                for swap_second in range(swap_first + 1, shuffle_end - 1):
+                    for swap_third in range(swap_second, shuffle_end):
+                        new_route = self.swap(
+                            self.best_route, swap_first, swap_second)
+                            
+                        new_route = self.swap(
+                            self.best_route, swap_second, swap_third)
+
+                        new_distance = self.calculate_path_dist(
+                            self.distance_matrix, new_route)
+                            
+                        if self.best_distance > new_distance:
+                            self.update(new_route, new_distance)
+
+            improvement_factor = 1 - self.best_distance/previous_best
+        return self.best_route, self.best_distance, self.distances
+
     @staticmethod
     def calculate_path_dist(distance_matrix, path):
         """

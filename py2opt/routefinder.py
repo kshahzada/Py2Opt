@@ -36,7 +36,7 @@ class RouteFinder:
             num_cities = len(self.distance_matrix)
             initial_route = self.initialize_route()
             tsp = Solver(self.distance_matrix, initial_route)
-            new_route, new_distance, distances = tsp.two_opt(improvement_threshold=improvement_threshold)
+            new_route, new_distance, distances = tsp.three_opt(improvement_threshold=improvement_threshold)
 
             if iteration == 0:
                 best_distance = new_distance
