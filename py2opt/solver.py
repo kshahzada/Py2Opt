@@ -15,7 +15,7 @@ class Solver:
         print("Updating : {} {}".format(new_route,new_distance))
         self.best_distance = new_distance
         self.best_route = new_route
-        self.distances += [new_distance]
+        self.distances += [new_distance.copy()]
         return self.best_distance, self.best_route, self.distances
 
     def exhaustive_search(self):
@@ -73,10 +73,7 @@ class Solver:
         """
         This method calculates the total distance between the first city in the given path to the last city in the path.
         """
-        path_distance = 0
-        for ind in range(len(path) - 1):
-            path_distance += distance_matrix[int(path[ind])][int(path[ind + 1])]
-        return float("{0:.2f}".format(path_distance))
+        return sum([distance_matrix[path[ind]][path[ind + 1]] for ind in range(len(path) - 1)])
 
     @staticmethod
     def swap(path, swap_first, swap_last):
