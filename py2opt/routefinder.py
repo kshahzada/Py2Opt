@@ -25,7 +25,7 @@ class RouteFinder:
         self.fixed_end = fixed_end
 
     def solve(self, improvement_threshold=0.01):
-        print("Top")
+        print("trips")
 
         start_time = time.time()
         best_distance = 0
