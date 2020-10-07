@@ -12,7 +12,7 @@ class Solver:
         self.distances = []
 
     def update(self, new_route, new_distance):
-        print("Updating : {} {}".format(new_route,new_distance))
+        # print("Updating : {} {}".format(new_route,new_distance))
         self.best_distance = new_distance
         self.best_route = new_route
         self.distances += [new_distance.copy()]

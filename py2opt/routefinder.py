@@ -25,8 +25,6 @@ class RouteFinder:
         self.fixed_end = fixed_end
 
     def solve(self, improvement_threshold=0.01):
-        print("trips")
-
         start_time = time.time()
         best_distance = 0
         best_route = []
@@ -36,7 +34,7 @@ class RouteFinder:
             num_cities = len(self.distance_matrix)
             initial_route = self.initialize_route()
             tsp = Solver(self.distance_matrix, initial_route)
-            new_route, new_distance, distances = tsp.three_opt(improvement_threshold=improvement_threshold)
+            new_route, new_distance, distances = tsp.two_opt(improvement_threshold=improvement_threshold)
 
             if iteration == 0:
                 best_distance = new_distance
