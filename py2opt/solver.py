@@ -14,7 +14,8 @@ class Solver:
     def update(self, new_route, new_distance):
         self.best_distance = new_distance
         self.best_route = new_route
-        return self.best_distance, self.best_route
+        self.distances += [new_distance]
+        return self.best_distance, self.best_route, self.distances
 
     def exhaustive_search(self):
         self.best_route = [0] + list(range(1, self.num_cities))
@@ -62,7 +63,6 @@ class Solver:
                         self.best_route, swap_first, swap_last)
                     new_distance = self.calculate_path_dist(
                         self.distance_matrix, new_route)
-                    self.distances.append(self.best_distance)
                     if self.best_distance > new_distance:
                         self.update(new_route, new_distance)
 
